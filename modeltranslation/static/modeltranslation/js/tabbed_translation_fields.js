@@ -150,7 +150,8 @@ var google, django, gettext;
                     return;
                 var tabsContainer = $('<div></div>'),
                     tabsList = $('<ul></ul>'),
-                    insertionPoint;
+                    insertionPoint,
+                    activeTab = 0;
                 tabsContainer.append(tabsList);
                 $.each(lang, function (lang, el) {
                     var container = $(el).closest('.form-row'),
@@ -177,9 +178,13 @@ var google, django, gettext;
                             '><a href="#' + tabId + '">' + lang.replace('_', '-') + '</a></li>');
                     tabsList.append(tab);
                     tabsContainer.append(panel);
+                    if (container.hasClass("errors"))
+                        activeTab = tabsList.length;
                 });
                 insertionPoint.el[insertionPoint.insert](tabsContainer);
-                tabsContainer.tabs();
+                tabsContainer.tabs({
+                  active: activeTab,
+                });
                 tabs.push(tabsContainer);
             });
             return tabs;
@@ -308,7 +313,8 @@ var google, django, gettext;
                     return;
                 var tabsContainer = $('<td></td>'),
                     tabsList = $('<ul></ul>'),
-                    insertionPoint;
+                    insertionPoint,
+                    activeTab = 0;
                 tabsContainer.append(tabsList);
 
                 $.each(lang, function (lang, el) {
@@ -342,9 +348,13 @@ var google, django, gettext;
                              '><a href="#' + tabId + '">' + lang.replace('_', '-') + '</a></li>');
                     tabsList.append($tab);
                     tabsContainer.append($panel);
+                    if (container.hasClass("errors"))
+                        activeTab = tabsList.length;
                 });
                 insertionPoint.el[insertionPoint.insert](tabsContainer);
-                tabsContainer.tabs();
+                tabsContainer.tabs({
+                    active: activeTab,
+                });
                 tabs.push(tabsContainer);
             });
             return tabs;
@@ -375,11 +385,7 @@ var google, django, gettext;
                 var self = this;
                 this.$select.change(function () {
                     $.each(tabs, function (idx, tab) {
-                        try { //jquery ui => 1.10 api changed, we keep backward compatibility
-                            tab.tabs('select', parseInt(self.$select.val(), 10));
-                        } catch(e) {
-                            tab.tabs('option', 'active', parseInt(self.$select.val(), 10));
-                        }
+                      tab.tabs('option', 'active', parseInt(self.$select.val(), 10));
                     });
                 });
             },
@@ -387,11 +393,7 @@ var google, django, gettext;
             activateTab: function(tabs) {
                 var self = this;
                 $.each(tabs, function (idx, tab) {
-                    try { //jquery ui => 1.10 api changed, we keep backward compatibility
-                        tab.tabs('select', parseInt(self.$select.val(), 10));
-                    } catch(e) {
-                        tab.tabs('option', 'active', parseInt(self.$select.val(), 10));
-                    }
+                  tab.tabs('option', 'active', parseInt(self.$select.val(), 10));
                 });
             }
         };
