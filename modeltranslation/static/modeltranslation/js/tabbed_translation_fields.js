@@ -153,6 +153,7 @@ var google, django, gettext;
                     insertionPoint,
                     activeTab = 0;
                 tabsContainer.append(tabsList);
+                index = 0
                 $.each(lang, function (lang, el) {
                     var container = $(el).closest('.form-row'),
                         label = $('label', container),
@@ -179,13 +180,14 @@ var google, django, gettext;
                     tabsList.append(tab);
                     tabsContainer.append(panel);
                     if (container.hasClass("errors"))
-                        activeTab = tabsList;
+                        activeTab = index;
                 });
                 insertionPoint.el[insertionPoint.insert](tabsContainer);
                 tabsContainer.tabs({
                   active: activeTab,
                 });
                 tabs.push(tabsContainer);
+                index=index+1;
             });
             return tabs;
         }
