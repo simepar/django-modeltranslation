@@ -181,13 +181,14 @@ var google, django, gettext;
                     tabsContainer.append(panel);
                     if (container.hasClass("errors"))
                         activeTab = index;
+                    index=index+1;
                 });
                 insertionPoint.el[insertionPoint.insert](tabsContainer);
                 tabsContainer.tabs({
                   active: activeTab,
                 });
                 tabs.push(tabsContainer);
-                index=index+1;
+
             });
             return tabs;
         }
